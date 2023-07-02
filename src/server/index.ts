@@ -3,9 +3,10 @@ import { EventEmitter } from "events";
 
 import Fastify from "fastify";
 import FastifyCors from "@fastify/cors";
+import FastifyStatic from "@fastify/static";
 
-import RenderMiddle from "./middleware/render";
-import APIMiddle from "./middleware/api";
+import RenderPlugin from "./plugin/render";
+import APIPlugin from "./plugin/api";
 
 class Executor extends EventEmitter {
   constructor() {
@@ -24,13 +25,16 @@ class Executor extends EventEmitter {
         preflightContinue: true,
       });
 
-      await app.register(RenderMiddle, {
-        root: path.resolve(__dirname, "..", ".."),
+      await app.register(FastifyStatic, {
+        root: path.resolve(__dirname, "..", "..", "dist", "client"),
+        prefix: `/static`,
       });
 
-      await app.register(APIMiddle, {
+      await app.register(APIPlugin, {
         prefix: "/api",
       });
+
+      await app.register(RenderPlugin);
 
       await app.ready();
       app.listen({ host, port });

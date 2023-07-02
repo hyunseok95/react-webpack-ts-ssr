@@ -9,13 +9,20 @@ export const Home: React.FunctionComponent<MyProps> = function (
   context?: any
 ): React.ReactNode {
   const [message, setMessage] = useState("");
-  function handleSendClick() {
+
+  function handleOnChange(e: any) {
+    setMessage(e.target.value);
     console.log(message);
+  }
+
+  function handleSendClick() {
+    setMessage("");
+    console.log("remove!");
   }
 
   return (
     <>
-      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+      <input value={message} onChange={handleOnChange} />
       <button onClick={handleSendClick}>Send</button>
     </>
   );

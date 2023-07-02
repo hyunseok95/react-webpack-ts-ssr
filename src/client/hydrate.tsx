@@ -8,5 +8,4 @@ declare global {
   }
 }
 
-const container = document.getElementById("root")!;
-hydrateRoot(container, <App hydration={window.hydration} />);
+hydrateRoot(document, <App hydration={window.hydration} />);
