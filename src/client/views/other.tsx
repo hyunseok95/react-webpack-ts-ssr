@@ -10,9 +10,8 @@ export const Other: React.FunctionComponent<MyProps> = function (
   context?: any
 ): React.ReactNode {
   return (
-    <div>
-      <p>This page is just for demonstrating client-side navigation.</p>
-      <Link to="/">Go back to index</Link>{" "}
-    </div>
+    <>
+      <a href="/">go home</a>
+    </>
   );
 };

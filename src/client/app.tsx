@@ -1,32 +1,27 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
-// import { useSyncExternalStore } from "react";
-// import { todosStore } from "./hydrate-store";
 
 import { Home } from "./views/home";
 import { Other } from "./views/other";
-interface MyProps {
-  hydration?: any;
-}
+import { ServerSideProps } from "./state/hydrate-store";
 
-export default function App(props: MyProps, context?: any): React.ReactNode {
-  // const todos = useSyncExternalStore(
-  //   todosStore.subscribe,
-  //   todosStore.getSnapshot,
-  //   todosStore.getSnapshot
-  // );
+export default function App(
+  props: Record<"serverSideProps", ServerSideProps>,
+  context?: any
+): React.ReactNode {
+  // const user = useAppSelector((state) => state.user);
+  // const dispatch = useDispatch();
+  // const router = useRouter();
 
-  // console.log(todos);
-  // todosStore.addTodo()
   function logMessage() {
-    console.log(props);
+    console.log(props.serverSideProps);
   }
   logMessage();
 
-  const hydrateScript = `window.hydration=${JSON.stringify({
-    ...props.hydration,
-  })};`;
+  const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify(
+    props.serverSideProps
+  )};`;
 
   return (
     <html>
@@ -34,12 +29,12 @@ export default function App(props: MyProps, context?: any): React.ReactNode {
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/static/favicon.ico" type="image/x-icon"></link>
-        <script dangerouslySetInnerHTML={{ __html: hydrateScript }} />
+        <script dangerouslySetInnerHTML={{ __html: serverSideProps }} />
         <title>My app</title>
       </head>
       <body>
         <React.Suspense>
-          <StaticRouter location={props.hydration.url}>
+          <StaticRouter location={props.serverSideProps.url}>
             <Routes>
               <Route key="/" path="/" Component={Home} />;
               <Route key="/other" path="/other" Component={Other} />;

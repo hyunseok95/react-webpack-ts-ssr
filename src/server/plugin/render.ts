@@ -13,11 +13,11 @@ export default FastifyPlugin(async function (app, opts) {
     method: "GET",
     async handler(req, rep) {
       try {
-        const hydration = {
+        const serverSideProps = {
           url: req.url,
         };
 
-        const renderToStream = renderToPipeableStream(App({ hydration }));
+        const renderToStream = renderToPipeableStream(App({ serverSideProps }));
 
         const HTMLSendToStream = promisify(function (cb) {
           const writableStream = new Writable({

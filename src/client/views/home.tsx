@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface MyProps {
   name?: string;
@@ -24,6 +25,7 @@ export const Home: React.FunctionComponent<MyProps> = function (
     <>
       <input value={message} onChange={handleOnChange} />
       <button onClick={handleSendClick}>Send</button>
+      <a href="/other">go other</a>
     </>
   );
 };
