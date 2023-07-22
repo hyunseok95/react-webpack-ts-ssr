@@ -1,7 +1,7 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Provider } from "react-redux";
 import { Home } from "./pages/home";
 import { Other } from "./pages/other";
 import store from "./state";
@@ -22,4 +22,4 @@ export default function App(props: any, context?: any): React.ReactNode {
 }
 
 const root = document.getElementById("root")!;
-createRoot(root).render(<App serverSideProps={window.__SERVER_SIDE_PROPS__} />);
+createRoot(root).render(<App />);
