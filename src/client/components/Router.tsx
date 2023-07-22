@@ -1,19 +1,29 @@
-// import Image from "next/image";
-import { CSSProperties, ReactNode } from "react";
-import styled from "@emotion/styled";
-// import Box from "@mui/material/Box";
-
+import React from "react";
 import { StaticRouter } from "react-router-dom/server";
 import { BrowserRouter } from "react-router-dom";
+import { IS_DEV } from "../lib/constant";
 
-interface RouterComponentProps {
-  children: React.ReactNode;
+interface RouterProps {
   url?: string;
+  children: React.ReactNode;
 }
 
 export default function Router(
-  props: RouterComponentProps,
+  props: RouterProps,
   context?: any
 ): React.ReactNode {
-  return <>{props.children}</>;
+  switch (IS_DEV) {
+    case true:
+      return (
+        <React.StrictMode>
+          <BrowserRouter>{props.children}</BrowserRouter>
+        </React.StrictMode>
+      );
+    case false:
+      return (
+        <React.Suspense>
+          <StaticRouter location={props.url!}>{props.children}</StaticRouter>
+        </React.Suspense>
+      );
+  }
 }

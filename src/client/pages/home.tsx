@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../state";
 import { increment } from "../state/counter";
+import Link from "../components/Link";
 
 interface MyProps {
   name?: string;
@@ -37,7 +38,7 @@ export const Home: React.FunctionComponent<MyProps> = function (
       <button onClick={handleSendClick}>Send</button>
       <button onClick={handleCountClick}>Count</button>
       <button onClick={handleCountClick}>Count</button>
-      <a href="/other">go other</a>
+      <Link url="/other">go other</Link>
     </>
   );
 };

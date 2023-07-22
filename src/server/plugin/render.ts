@@ -5,7 +5,7 @@ import React from "react";
 import { renderToPipeableStream } from "react-dom/server";
 import FastifyPlugin from "fastify-plugin";
 
-import App from "../../client/app";
+import App from "../../client/pages";
 
 export default FastifyPlugin(async function (app, opts) {
   app.route({

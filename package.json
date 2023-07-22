@@ -9,7 +9,7 @@
     "build:client": "webpack --config webpack.client.ts",
     "build:server": "webpack --config webpack.server.ts",
     "start": "npm run build && node dist/server/index.js",
-    "dev": "webpack serve --config webpack.dev.ts ",
+    "dev": "NODE_ENV=development webpack serve --config webpack.client.ts ",
     "dev:server": "babel-node --extensions '.tsx,.ts,.js' src/server/index.ts"
   },
   "nodemonConfig": {
