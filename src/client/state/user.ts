@@ -11,5 +11,6 @@ export const {
     phone_number: "",
     email: "",
     password: "",
+    value: "",
   },
 });

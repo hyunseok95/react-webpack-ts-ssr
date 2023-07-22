@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../lib/store";
+import { increment } from "../lib/store/CounterReducer";
 
 interface MyProps {
   name?: string;
@@ -10,6 +11,15 @@ export const Home: React.FunctionComponent<MyProps> = function (
   context?: any
 ): React.ReactNode {
   const [message, setMessage] = useState("");
+
+  const count = useAppSelector((state) => state.counter.value);
+
+  const dispatch = useAppDispatch();
+
+  function handleCountClick() {
+    dispatch(increment());
+    console.log(count);
+  }
 
   function handleOnChange(e: any) {
     setMessage(e.target.value);
@@ -25,6 +35,7 @@ export const Home: React.FunctionComponent<MyProps> = function (
     <>
       <input value={message} onChange={handleOnChange} />
       <button onClick={handleSendClick}>Send</button>
+      <button onClick={handleCountClick}>Count</button>
       <a href="/other">go other</a>
     </>
   );

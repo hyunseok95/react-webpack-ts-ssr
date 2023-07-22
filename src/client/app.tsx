@@ -2,26 +2,20 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 
+import { ServerSideProps } from "./state/hydrate-store";
 import { Home } from "./views/home";
 import { Other } from "./views/other";
-import { ServerSideProps } from "./state/hydrate-store";
+import { Provider } from "react-redux";
+import store from "./lib/store";
 
 export default function App(
   props: Record<"serverSideProps", ServerSideProps>,
   context?: any
 ): React.ReactNode {
-  // const user = useAppSelector((state) => state.user);
-  // const dispatch = useDispatch();
-  // const router = useRouter();
-
-  function logMessage() {
-    console.log(props.serverSideProps);
-  }
-  logMessage();
-
-  const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify(
-    props.serverSideProps
-  )};`;
+  const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify({
+    ...props.serverSideProps,
+    isServer: !props.serverSideProps.isServer,
+  })};`;
 
   return (
     <html>
@@ -33,16 +27,34 @@ export default function App(
         <title>My app</title>
       </head>
       <body>
-        <React.Suspense>
-          <StaticRouter location={props.serverSideProps.url}>
-            <Routes>
-              <Route key="/" path="/" Component={Home} />;
-              <Route key="/other" path="/other" Component={Other} />;
-            </Routes>
-          </StaticRouter>
-        </React.Suspense>
+        <Provider store={store}>
+          <React.Suspense>
+            <StaticRouter location={props.serverSideProps.url}>
+              <Routes>
+                <Route key="/" path="/" Component={Home} />;
+                <Route key="/other" path="/other" Component={Other} />;
+              </Routes>
+            </StaticRouter>
+          </React.Suspense>
+        </Provider>
         <script src="/static/index.js"></script>
       </body>
     </html>
   );
 }
+
+// export function AApp(
+//   props: Record<"serverSideProps", ServerSideProps>,
+//   context?: any
+// ): React.ReactNode {
+//   const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify({
+//     ...props.serverSideProps,
+//     isServer: !props.serverSideProps.isServer,
+//   })};`;
+
+//   return (
+//     <Provider store={store}>
+//     <App serverSideProps={window.__SERVER_SIDE_PROPS__} />
+//   </Provider>
+//   );
+// }

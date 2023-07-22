@@ -15,8 +15,9 @@ export default FastifyPlugin(async function (app, opts) {
       try {
         const serverSideProps = {
           url: req.url,
+          params: req.params,
+          isServer: true,
         };
-
         const renderToStream = renderToPipeableStream(App({ serverSideProps }));
 
         const HTMLSendToStream = promisify(function (cb) {

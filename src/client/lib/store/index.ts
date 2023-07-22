@@ -1,45 +1,15 @@
-// import {createWrapper, HYDRATE, MakeStore} from "next-redux-wrapper";
-import { TypedUseSelectorHook, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
-import { ActionWithPayload, mergeReducer } from "./reducer";
-import State from "../../state/index";
-import { IS_DEV } from "../env";
-
-const reducer = mergeReducer([
-  State.User.UserReducer,
-  State.Room.RoomPageReducer,
-]);
-
-declare global {
-  type RootState = ReturnType<typeof reducer>;
-}
-
-const rootReducer = (
-  state: RootState | undefined,
-  action: ActionWithPayload
-) => {
-  switch (action.type) {
-    case "HYDRATE":
-      return { ...state, ...action.payload };
-    default: {
-      return reducer(state, action);
-    }
-  }
-};
-
-export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
+import CounterReducer from "./CounterReducer";
 
 const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: false,
-    }),
-  devTools: IS_DEV,
+  reducer: {
+    counter: CounterReducer,
+  },
 });
 
-// export const wrapper = createWrapper<any>(makeStore, {
-//   debug: IS_DEV,
-// });
-
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch: () => AppDispatch = useDispatch;
+export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;
