@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../lib/store";
-import { increment } from "../lib/store/CounterReducer";
+import { useAppDispatch, useAppSelector } from "../state";
+import { increment } from "../state/counter";
 
 interface MyProps {
   name?: string;
@@ -35,6 +35,7 @@ export const Home: React.FunctionComponent<MyProps> = function (
     <>
       <input value={message} onChange={handleOnChange} />
       <button onClick={handleSendClick}>Send</button>
+      <button onClick={handleCountClick}>Count</button>
       <button onClick={handleCountClick}>Count</button>
       <a href="/other">go other</a>
     </>

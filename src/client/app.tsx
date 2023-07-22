@@ -2,20 +2,18 @@ import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { StaticRouter } from "react-router-dom/server";
 
-import { ServerSideProps } from "./state/hydrate-store";
-import { Home } from "./views/home";
-import { Other } from "./views/other";
+import { Home } from "./pages/home";
+import { Other } from "./pages/other";
 import { Provider } from "react-redux";
-import store from "./lib/store";
+import store from "./state";
 
 export default function App(
   props: Record<"serverSideProps", ServerSideProps>,
   context?: any
 ): React.ReactNode {
-  const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify({
-    ...props.serverSideProps,
-    isServer: !props.serverSideProps.isServer,
-  })};`;
+  const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify(
+    props.serverSideProps
+  )};`;
 
   return (
     <html>
@@ -42,19 +40,3 @@ export default function App(
     </html>
   );
 }
-
-// export function AApp(
-//   props: Record<"serverSideProps", ServerSideProps>,
-//   context?: any
-// ): React.ReactNode {
-//   const serverSideProps = `window.__SERVER_SIDE_PROPS__=${JSON.stringify({
-//     ...props.serverSideProps,
-//     isServer: !props.serverSideProps.isServer,
-//   })};`;
-
-//   return (
-//     <Provider store={store}>
-//     <App serverSideProps={window.__SERVER_SIDE_PROPS__} />
-//   </Provider>
-//   );
-// }

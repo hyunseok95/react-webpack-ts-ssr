@@ -25,6 +25,7 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@fastify/cookie": "^8.3.0",
     "@fastify/cors": "^8.3.0",
     "@fastify/static": "^6.10.2",
     "@reduxjs/toolkit": "^1.9.5",

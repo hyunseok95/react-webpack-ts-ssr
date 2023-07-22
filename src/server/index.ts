@@ -4,6 +4,7 @@ import { EventEmitter } from "events";
 import Fastify from "fastify";
 import FastifyCors from "@fastify/cors";
 import FastifyStatic from "@fastify/static";
+import FastifyCookie from "@fastify/cookie";
 
 import RenderPlugin from "./plugin/render";
 import APIPlugin from "./plugin/api";
@@ -28,6 +29,11 @@ class Executor extends EventEmitter {
       await app.register(FastifyStatic, {
         root: path.resolve(__dirname, "..", "..", "dist", "client"),
         prefix: `/static`,
+      });
+
+      await app.register(FastifyCookie, {
+        secret: "my-secret",
+        parseOptions: {},
       });
 
       await app.register(APIPlugin, {

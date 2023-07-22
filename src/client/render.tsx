@@ -1,17 +1,12 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-
 import { Provider } from "react-redux";
-import store from "./lib/store";
-import { Home } from "./views/home";
-import { Other } from "./views/other";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { Home } from "./pages/home";
+import { Other } from "./pages/other";
+import store from "./state";
 
-interface MyProps {
-  hydration?: any;
-}
-
-function App(props: MyProps, context?: any): React.ReactNode {
+export default function App(props: any, context?: any): React.ReactNode {
   return (
     <Provider store={store}>
       <React.StrictMode>
@@ -27,4 +22,4 @@ function App(props: MyProps, context?: any): React.ReactNode {
 }
 
 const root = document.getElementById("root")!;
-createRoot(root).render(<App />);
+createRoot(root).render(<App serverSideProps={window.__SERVER_SIDE_PROPS__} />);
